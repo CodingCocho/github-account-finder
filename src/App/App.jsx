@@ -4,6 +4,7 @@ import {Navbar} from '../components/Navbar';
 import {About} from '../pages/About';
 import {Home} from '../pages/Home';
 import {NotFound} from '../pages/NotFound';
+import {AlertProvider} from '../context/AlertContext';
 import {GithubProvider} from '../context/GithubContext';
 
 function App() {
