@@ -5,8 +5,12 @@ export const Home = () =>
 {
     return (
         <>
-            {/* Search Component will go here */}
+            
+            
+            {/* Component used to search for users */}
             <UserSearch />
+
+            {/* Component used to display results of the users */}
             <UserResults />
         </>
     )
