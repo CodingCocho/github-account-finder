@@ -21,6 +21,26 @@ const githubReducer = (state, action) =>
                 loading: false
             }
 
+        // Case for GET_USER
+        case 'GET_USER':
+
+            // Return the state with the user updated
+            return {
+                ...state,
+                user: action.payload,
+                loading: false
+            }
+
+        // Case for GET_REPOS
+        case 'GET_REPOS':
+
+            // Return the state with the repos updated
+            return {
+                ...state,
+                repos: action.payload,
+                loading: false
+            }
+
         // Case for CLEAR_USERS
         case 'CLEAR_USERS':
             

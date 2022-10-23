@@ -27,6 +27,8 @@ export const GithubProvider = ({children}) =>
     const initialState = 
     {
         users: [],
+        user: {},
+        repos: [],
         loading: false
     }
 
@@ -113,6 +115,84 @@ export const GithubProvider = ({children}) =>
             payload: items
         });
     }
+    
+    /*
+    Search user objects from the Github API and dispatch 
+    the GET_USERS action to update the users field of the state
+    @param text the parameters used to retrieve the most accurate list of users
+    @return none
+    */
+    const getUser = async (login) =>
+    {
+
+        // Call local function to dispatch SET_LOADING action
+        setLoading();
+
+        // Use our environment variables to fetch the user objects matching the params
+        const response = await fetch(`${GITHUB_URL}/users/${login}`,
+        {
+            headers: {
+                Authorization: `token ${GITHUB_TOKEN}`,
+            },
+        });
+
+        if(response.status === 404)
+        {
+
+            // Redirect to 404 Route
+            window.location = '/notfound'
+        }
+        else
+        {
+
+            // Retrieve the list of user objects 
+            const data = await response.json();
+            
+            // Dispatch to the state to update the users field 
+            dispatch({
+                type: "GET_USER",
+                payload: data
+            });
+        }
+    }
+
+    /*
+    Search user objects from the Github API and dispatch 
+    the GET_USERS action to update the users field of the state
+    @param text the parameters used to retrieve the most accurate list of users
+    @return none
+    */
+    const getUserRepos = async (login) =>
+    {
+
+        // Call local function to dispatch SET_LOADING action
+        setLoading();
+
+        // Format the text parameter to be used inside the Github API call
+        const params = new URLSearchParams(
+            {
+                sort: 'created',
+                per_page: 10
+            }
+        );
+
+        // Use our environment variables to fetch the user objects matching the params
+        const response = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`,
+        {
+            headers: {
+                Authorization: `token ${GITHUB_TOKEN}`,
+            },
+        });
+
+        // Retrieve the list of user objects 
+        const data= await response.json();
+        
+        // Dispatch to the state to update the users field 
+        dispatch({
+            type: "GET_REPOS",
+            payload: data
+        });
+    }
 
     /*
     Empty the users field by dispatching the CLEAR_USERS action to the state
@@ -134,9 +214,13 @@ export const GithubProvider = ({children}) =>
         value={{
             users: state.users,
             loading: state.loading,
+            user: state.user,
+            repos: state.repos,
             fetchUsers,
             searchUsers,
-            clearUsers
+            clearUsers,
+            getUser,
+            getUserRepos
         }}
         >
             {children}

@@ -1,4 +1,5 @@
 import {useContext, useState} from 'react'
+import AlertContext from '../context/AlertContext';
 import GithubContext from '../context/GithubContext';
 
 export const UserSearch = () =>
@@ -9,6 +10,9 @@ export const UserSearch = () =>
     
     // Deconstruct the Github Provider using the React Context API
     const {users, searchUsers, clearUsers} = useContext(GithubContext)
+
+    // 
+    const {setAlert} = useContext(AlertContext);
 
     //  Component functions
 
@@ -37,7 +41,7 @@ export const UserSearch = () =>
         // Check if text is empty
         if(text === '')
         {
-            alert('Please enter something')
+            setAlert('Pleaser enter something', 'error')
         }
         
         // Else call searchUsers and reset the text useState
