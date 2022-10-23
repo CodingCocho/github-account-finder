@@ -6,7 +6,6 @@ export const Home = () =>
     return (
         <>
             
-            
             {/* Component used to search for users */}
             <UserSearch />
 
