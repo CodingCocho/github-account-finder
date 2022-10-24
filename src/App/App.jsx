@@ -15,7 +15,7 @@ function App() {
     // Establish the Github Provider
     <GithubProvider>
       
-      {/* Establish Alert Provider */}
+      {/* Establish the Alert Provider */}
       <AlertProvider>
 
         {/* Hold the frontend that is rendered inside the root */}
